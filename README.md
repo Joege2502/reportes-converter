@@ -51,4 +51,4 @@ Este proyecto es una herramienta Full-Stack diseñada para la limpieza, normaliz
    npm run dev
    ```
 
-\*\*\*\*Desarrollado por Jorge Luis Osores Muñante - Ingeniería de Software con Inteligencia Artificial (SENATI).
+**Desarrollado por Jorge Luis Osores Muñante - Ingeniería de Software con Inteligencia Artificial (SENATI).**
