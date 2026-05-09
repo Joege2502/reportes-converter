@@ -14,9 +14,10 @@ export default function LoginPage() {
     e.preventDefault();
     setIsSubmitting(true);
     setError("");
+    const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
 
     try {
-      const response = await axios.post("http://localhost:3000/auth/login", {
+      const response = await axios.post(`${API_URL}/auth/login`, {
         username,
         password,
       });

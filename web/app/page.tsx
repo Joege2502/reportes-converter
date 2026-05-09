@@ -20,6 +20,7 @@ export default function Home() {
   const [history, setHistory] = useState<HistoryItem[]>([]);
   const [userData, setUserData] = useState<UserData | null>(null);
   const router = useRouter();
+  const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -70,22 +71,18 @@ export default function Home() {
     const token = localStorage.getItem("token");
 
     try {
-      const response = await axios.post(
-        "http://localhost:3000/convert",
-        formData,
-        {
-          responseType: "blob",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-          onUploadProgress: (progressEvent) => {
-            const percentCompleted = Math.round(
-              (progressEvent.loaded * 100) / (progressEvent.total || 1),
-            );
-            setUploadProgress(percentCompleted);
-          },
+      const response = await axios.post(`${API_URL}/convert`, formData, {
+        responseType: "blob",
+        headers: {
+          Authorization: `Bearer ${token}`,
         },
-      );
+        onUploadProgress: (progressEvent) => {
+          const percentCompleted = Math.round(
+            (progressEvent.loaded * 100) / (progressEvent.total || 1),
+          );
+          setUploadProgress(percentCompleted);
+        },
+      });
 
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement("a");
