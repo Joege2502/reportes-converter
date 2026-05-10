@@ -74,7 +74,10 @@ export default function Home() {
       const response = await axios.post(`${API_URL}/convert`, formData, {
         responseType: "blob",
         headers: {
-          Authorization: `Bearer ${token}`,
+          // Aseguramos que el token no tenga espacios extra
+          Authorization: `Bearer ${token?.trim()}`,
+          // Ayudamos al servidor a identificar que enviamos un archivo
+          "Content-Type": "multipart/form-data",
         },
         onUploadProgress: (progressEvent) => {
           const percentCompleted = Math.round(
