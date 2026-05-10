@@ -74,9 +74,7 @@ export default function Home() {
       const response = await axios.post(`${API_URL}/convert`, formData, {
         responseType: "blob",
         headers: {
-          // Aseguramos que el token no tenga espacios extra
-          Authorization: `Bearer ${token?.trim()}`,
-          // Ayudamos al servidor a identificar que enviamos un archivo
+          Authorization: "Bearer " + token!.trim().replace(/\s/g, ""),
           "Content-Type": "multipart/form-data",
         },
         onUploadProgress: (progressEvent) => {
