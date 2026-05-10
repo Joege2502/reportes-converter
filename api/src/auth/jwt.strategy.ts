@@ -9,12 +9,13 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       // Extraemos el token de la cabecera "Authorization: Bearer <token>"
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreExpiration: false,
-      secretOrKey: 'SUPER_SECRET_KEY_2026', // LA MISMA QUE EN EL MODULE
+      // USAMOS LA VARIABLE DE ENTORNO O LA DE RESPALDO
+      secretOrKey: process.env.JWT_SECRET || '12345',
     });
   }
 
   async validate(payload: any) {
-    // Si el token es válido, Passport nos da los datos del "payload"
+    // Passport inyecta este objeto en request.user
     return { userId: payload.sub, username: payload.user };
   }
 }

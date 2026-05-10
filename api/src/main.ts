@@ -4,13 +4,21 @@ import { AppModule } from './app.module';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  // Prefijo global para que todas las rutas empiecen con /api
+  // Prefijo global
   app.setGlobalPrefix('api');
 
-  // Habilitar CORS para que Vercel pueda comunicarse
-  app.enableCors();
+  // Configuración de CORS detallada
+  app.enableCors({
+    // Reemplaza con tu URL real de Vercel
+    origin: ['https://reportes-converter.vercel.app', 'http://localhost:3000'],
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+    credentials: true,
+    allowedHeaders: ['Content-Type', 'Authorization', 'Accept'],
+  });
 
-  // Azure asigna un puerto dinámico, por eso usamos process.env.PORT
-  await app.listen(process.env.PORT || 3000);
+  // Azure usa process.env.PORT, local usa 3000
+  const port = process.env.PORT || 3000;
+  await app.listen(port);
+  console.log(`Application is running on: ${port}`);
 }
 bootstrap();
